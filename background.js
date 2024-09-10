@@ -2,6 +2,10 @@ function toggleSidePanel(tabId) {
   chrome.sidePanel.getOptions({ tabId }, (options) => {
     if (options.enabled) {
       chrome.sidePanel.open({ tabId });
+    } else {
+      chrome.sidePanel.setOptions({ tabId, path: 'sidepanel.html', enabled: true }, () => {
+        chrome.sidePanel.open({ tabId });
+      });
     }
   });
 }
