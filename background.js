@@ -27,7 +27,12 @@ chrome.commands.onCommand.addListener((command) => {
   if (command === "toggle-side-panel") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0]) {
-        toggleSidePanel(tabs[0].id);
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          function: () => {
+            chrome.runtime.sendMessage({ action: "openSidePanel" });
+          }
+        });
       }
     });
   }
@@ -35,4 +40,10 @@ chrome.commands.onCommand.addListener((command) => {
 
 chrome.action.onClicked.addListener((tab) => {
   toggleSidePanel(tab.id);
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "openSidePanel" && sender.tab) {
+    toggleSidePanel(sender.tab.id);
+  }
 });
