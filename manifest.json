@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "ATLAS",
+  "version": "1.0",
+  "description": "Chrome extension for the ATLAS project.",
+  "permissions": ["sidePanel", "scripting", "activeTab"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://gemini.google.com/*",
+    "https://claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open Atlas Side Panel"
+  },
+  "commands": {
+    "toggle-side-panel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H"
+      },
+      "description": "Toggle Atlas Side Panel"
+    }
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}
